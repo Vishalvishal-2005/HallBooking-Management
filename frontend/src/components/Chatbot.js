@@ -11,6 +11,9 @@ const Chatbot = () => {
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
 
+  /**
+   * Scrolls to the bottom of the messages container smoothly.
+   */
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -68,6 +71,9 @@ const Chatbot = () => {
     }
   };
 
+  /**
+   * Handles key press events to send a message on Enter key without Shift.
+   */
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -75,6 +81,9 @@ const Chatbot = () => {
     }
   };
 
+  /**
+   * Resets the chat messages and clears any errors.
+   */
   const clearChat = () => {
     setMessages([{
       role: 'assistant',

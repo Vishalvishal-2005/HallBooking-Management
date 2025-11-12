@@ -4,6 +4,18 @@ import { Clock, Sparkles, TrendingUp, Users } from 'lucide-react';
 import { api } from '../services/api';
 import HallCard from './HallCard';
 
+/**
+ * Component that fetches and displays AI-generated venue recommendations.
+ *
+ * It retrieves similar halls based on the currentHallId and personalized recommendations.
+ * The component manages loading states and errors, providing fallback data if necessary.
+ * Users can switch between similar and personalized tabs, and retry fetching data if needed.
+ *
+ * @param {Object} props - The component properties.
+ * @param {string} props.currentHallId - The ID of the current hall to fetch similar venues.
+ * @param {function} props.onBook - Callback function to handle booking a hall.
+ * @returns {JSX.Element} The rendered component.
+ */
 const AIRecommendations = ({ currentHallId, onBook }) => {
   const [similarHalls, setSimilarHalls] = useState([]);
   const [personalizedHalls, setPersonalizedHalls] = useState([]);
@@ -18,6 +30,13 @@ const AIRecommendations = ({ currentHallId, onBook }) => {
     fetchPersonalizedHalls();
   }, [currentHallId]);
 
+  /**
+   * Fetches similar halls based on the current hall ID.
+   *
+   * This function initiates a loading state and attempts to retrieve similar halls from the API using the currentHallId.
+   * If the response is not an array or is empty, it fetches fallback data from a different endpoint.
+   * The function handles errors by logging them and updating the error state, ensuring the loading state is reset at the end.
+   */
   const fetchSimilarHalls = async () => {
     try {
       setLoading(true);
@@ -60,6 +79,9 @@ const AIRecommendations = ({ currentHallId, onBook }) => {
 
   const hallsToShow = activeTab === 'similar' ? similarHalls : personalizedHalls;
 
+  /**
+   * Attempts to fetch halls based on the active tab.
+   */
   const retryFetch = () => {
     setError(null);
     if (activeTab === 'similar') {
