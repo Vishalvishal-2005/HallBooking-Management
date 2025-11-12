@@ -27,6 +27,16 @@ const LoadingSpinner = () => (
 );
 
 // Main app content that uses routing
+/**
+ * Renders the main application content based on user authentication status.
+ *
+ * The component checks if the user is loading and displays a loading spinner if so.
+ * It determines the default route for the user based on their role (admin or owner)
+ * and sets up various routes for public and protected pages, ensuring that
+ * navigation and chatbot are only available to authenticated users.
+ *
+ * @returns A JSX element representing the application content.
+ */
 const AppContent = () => {
   const { user, loading, isAdmin, isOwner } = useAuth();
 
@@ -34,6 +44,13 @@ const AppContent = () => {
     return <LoadingSpinner />;
   }
 
+  /**
+   * Returns the default route based on user role.
+   *
+   * The function checks the user's role and returns the corresponding dashboard route.
+   * If the user is an admin, it returns '/admin/dashboard'. If the user is an owner,
+   * it returns '/owner/dashboard'. For all other cases, it defaults to '/halls'.
+   */
   const getDefaultRoute = () => {
     if (isAdmin) return '/admin/dashboard';
     if (isOwner) return '/owner/dashboard';
@@ -119,6 +136,9 @@ const AppContent = () => {
 };
 
 // Main App component with proper Router wrapping
+/**
+ * Renders the main application with routing and authentication context.
+ */
 const App = () => {
   return (
     <Router>
